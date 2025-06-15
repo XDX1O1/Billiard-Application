@@ -1,0 +1,243 @@
+.vbox-background {
+    -fx-background-image: url("../assets/bgImage.png");
+}
+
+.topNavButtonDoc {
+    -fx-background-image: url("../assets/userDocs.png");
+}
+
+.topNavButtonRightIcon {
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-size: 50 50;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+}
+
+.tableStyleBar {
+    -fx-background-color: #240115;
+}
+
+/* Enhanced TableView Styling */
+.tableStyle {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* Table Header Background */
+.tableStyle .column-header-background {
+    -fx-background-color: #8B4513;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-border-color: #654321;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.tableStyle .column-header-background .filler {
+    -fx-background-color: #8B4513;
+    -fx-background-radius: 0 8px 0 0;
+}
+
+/* Individual Column Headers */
+.tableStyle .column-header {
+    -fx-background-color: #8B4513;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-alignment: center;
+    -fx-border-color: #654321;
+    -fx-border-width: 0 1px 0 0;
+    -fx-padding: 12px 8px;
+}
+
+.tableStyle .column-header:hover {
+    -fx-background-color: #A0522D;
+    -fx-cursor: hand;
+}
+
+.tableStyle .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Table Rows */
+.tableStyle .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #e8e8e8;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 2px 0;
+}
+
+.tableStyle .table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.tableStyle .table-row-cell:selected {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.tableStyle .table-row-cell:hover {
+    -fx-background-color: #f0f8ff;
+}
+
+.tableStyle .table-row-cell:selected:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Table Cells */
+.tableStyle .table-cell {
+    -fx-padding: 10px 8px;
+    -fx-alignment: center-left;
+    -fx-border-color: #e8e8e8;
+    -fx-border-width: 0 1px 0 0;
+    -fx-font-size: 12px;
+    -fx-text-fill: #333333;
+}
+
+/* Specific Column Styling */
+.tableStyle .table-column:first-child .table-cell {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+/* Number column (No.) */
+.tableStyle #noColumn .table-cell {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-background-color: #f8f9fa;
+}
+
+/* Amount column */
+.tableStyle #amountColumn .table-cell {
+    -fx-alignment: center-right;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32;
+}
+
+/* Date column */
+.tableStyle #dateColumn .table-cell {
+    -fx-alignment: center;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* Phone number column */
+.tableStyle #phoneNumberColumn .table-cell {
+    -fx-alignment: center;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* Invoice ID column */
+.tableStyle #invoiceIdColumn .table-cell {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1976d2;
+}
+
+/* Table Type column */
+.tableStyle #tableTypeColumn .table-cell {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+/* Payment Method column */
+.tableStyle #paymentMethodColumn .table-cell {
+    -fx-alignment: center;
+}
+
+/* Scrollbar Styling */
+.tableStyle .scroll-bar:vertical {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 5px;
+    -fx-min-width: 12px;
+    -fx-max-width: 12px;
+}
+
+.tableStyle .scroll-bar:vertical .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 5px;
+}
+
+.tableStyle .scroll-bar:vertical .thumb {
+    -fx-background-color: #8B4513;
+    -fx-background-radius: 5px;
+}
+
+.tableStyle .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #A0522D;
+}
+
+.tableStyle .scroll-bar:horizontal {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 5px;
+    -fx-min-height: 12px;
+    -fx-max-height: 12px;
+}
+
+.tableStyle .scroll-bar:horizontal .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 5px;
+}
+
+.tableStyle .scroll-bar:horizontal .thumb {
+    -fx-background-color: #8B4513;
+    -fx-background-radius: 5px;
+}
+
+.tableStyle .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #A0522D;
+}
+
+/* Corner region where scrollbars meet */
+.tableStyle .corner {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Empty table placeholder */
+.tableStyle .placeholder {
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+}
+
+.tableStyle .placeholder .label {
+    -fx-text-fill: #888888;
+}
+
+/* Column resize line */
+.tableStyle .column-resize-line {
+    -fx-stroke: #8B4513;
+    -fx-stroke-width: 2px;
+}
+
+/* Focus styling */
+.tableStyle:focused .table-row-cell:selected {
+    -fx-background-color: #2196F3;
+    -fx-border-color: #1976D2;
+    -fx-border-width: 2px;
+}
+
+/* Remove default table view borders that might interfere */
+.tableStyle .table-view {
+    -fx-table-cell-border-color: transparent;
+}
+
+/* Ensure consistent spacing */
+.tableStyle .virtual-flow .scroll-bar:vertical,
+.tableStyle .virtual-flow .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+/* Custom row highlighting for high amounts */
+.tableStyle .high-amount-row {
+    -fx-background-color: #fff3cd !important;
+    -fx-border-color: #ffc107;
+    -fx-border-width: 0 0 0 3px;
+}
+
+.tableStyle .high-amount-row:hover {
+    -fx-background-color: #ffeaa7 !important;
+}

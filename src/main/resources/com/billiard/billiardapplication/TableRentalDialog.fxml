@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" spacing="20.0" styleClass="vboxStyle" stylesheets="@css/rentaldialog.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.billiard.billiardapplication.Controller.TableRentalController">
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="460.0">
+            <children>
+                <Label fx:id="titleLabel" text="Penyewaan Meja" textFill="#333333">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Button fx:id="closeButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="30.0" styleClass="closeButton" stylesheets="@css/rentaldialog.css" text="×" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets left="400.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+
+        <!-- Table Type Label -->
+        <Label fx:id="tableTypeLabel" text="Non-VIP 1" textFill="#666666">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+
+        <!-- Customer Name -->
+        <VBox alignment="CENTER_LEFT" spacing="5.0">
+            <children>
+                <Label text="Nama" textFill="#333333">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="customerNameField" prefHeight="35.0" prefWidth="400.0" promptText="Masukkan Nama" styleClass="nameTextField" stylesheets="@css/rentaldialog.css" />
+            </children>
+        </VBox>
+      <VBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="175.0" spacing="5.0">
+         <children>
+            <Label text="Nomor Telepon" textFill="#333333">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customerPhoneNumberField" prefHeight="35.0" prefWidth="400.0" promptText="Masukkan Nomor" styleClass="nameTextField" stylesheets="@css/rentaldialog.css" />
+         </children>
+      </VBox>
+
+        <!-- Duration -->
+        <VBox alignment="CENTER_LEFT" spacing="5.0">
+            <children>
+                <Label text="Durasi Sewa" textFill="#333333">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Spinner fx:id="durationSpinner" prefHeight="35.0" prefWidth="80.0" />
+                        <Label text=":" textFill="#333333">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <Spinner fx:id="minuteSpinner" prefHeight="35.0" prefWidth="80.0" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <!-- Payment Method -->
+        <VBox alignment="CENTER_LEFT" spacing="5.0">
+            <children>
+                <Label text="Metode Pembayaran" textFill="#333333">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="paymentMethodCombo" prefHeight="35.0" prefWidth="267.0" promptText="BCA (Debit)" styleClass="paymentMethodMenu" stylesheets="@css/rentaldialog.css" />
+            </children>
+        </VBox>
+
+        <!-- Price -->
+        <Label fx:id="priceLabel" text="Rp. 15.000" textFill="#333333">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+
+        <!-- Save Button -->
+        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" prefHeight="40.0" prefWidth="160.0" styleClass="saveButton" stylesheets="@css/rentaldialog.css" text="Sewa">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

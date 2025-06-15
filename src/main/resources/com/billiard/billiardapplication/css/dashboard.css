@@ -1,0 +1,73 @@
+.anchor-pane {
+    -fx-background-image: url("../assets/bgImage.png");
+}
+
+.vbox-backgroundAvailable {
+    -fx-background-image: url("../assets/tableAvailable.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-size: 550 250;
+    -fx-background-repeat: no-repeat;
+}
+
+.vbox-style {
+    -fx-border-color: gray;
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+}
+
+.table-available {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #45a049);
+    -fx-border-color: #388E3C;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+.table-occupied {
+    -fx-background-color: linear-gradient(to bottom, #f44336, #d32f2f);
+    -fx-border-color: #c62828;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+.table-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
+}
+
+.topNavButton {
+    -fx-border-radius: 5;
+    -fx-border-color: #240115;
+    -fx-background-radius: 5;
+    -fx-background-color: transparent;
+    -fx-border-width: 2;
+}
+
+.topNavButtonDoc {
+    -fx-background-image: url("../assets/userDocs.png");
+}
+
+.topNavButtonUser {
+    -fx-background-image: url("../assets/userLogout.png");
+}
+
+.topNavButtonRightIcon {
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-size: 50 50;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+}
+
+.topNavButtonRightIcon:hover {
+    -fx-background-color: #f0f8ff;
+}
+
+.topNavAppIcon {
+    -fx-background-image: url("../assets/appIcon.png");
+}
