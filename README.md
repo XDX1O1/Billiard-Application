@@ -93,6 +93,8 @@ you can customize it on DatabaseUtil class
 ```SQL
 SQL:
 
+CREATE DATABASE billiard_test;
+
 CREATE TABLE admin (
   id int NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
@@ -100,6 +102,10 @@ CREATE TABLE admin (
   PRIMARY KEY (id),
   UNIQUE KEY username (username)
 );
+
+#Dummy Data for login
+INSERT INTO admin(ID, USERNAME, PASSWORD)
+VALUES (1, 'admin', 'admin');
 
 CREATE TABLE tables (
   table_number int NOT NULL,
