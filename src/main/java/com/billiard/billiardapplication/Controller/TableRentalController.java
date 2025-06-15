@@ -43,7 +43,6 @@ public class TableRentalController {
 
     @FXML
     private void initialize() {
-        // Initialize spinners with proper error handling
         try {
             if (durationSpinner != null) {
                 durationSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 1));
@@ -54,14 +53,10 @@ public class TableRentalController {
                 minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
                 minuteSpinner.valueProperty().addListener((obs, oldVal, newVal) -> updatePrice());
             }
-
-            // Initialize payment methods
             if (paymentMethodCombo != null) {
                 paymentMethodCombo.getItems().addAll("BCA (Debit)", "Cash", "Credit Card", "E-Wallet");
                 paymentMethodCombo.setValue("BCA (Debit)");
             }
-
-            // Initialize price label
             if (priceLabel != null) {
                 priceLabel.setText("Rp. 0");
             }
@@ -77,23 +72,17 @@ public class TableRentalController {
         this.tableService = tableService;
 
         try {
-            // Set table type display
             String displayName = getTableDisplayName(table);
             if (tableTypeLabel != null) {
                 tableTypeLabel.setText(displayName);
             }
-
-            // Check if table is available
             if (!table.isAvailable()) {
-                // Table is occupied, show cancel option
                 setControlsForOccupiedTable();
 
                 if (saveButton != null) {
-                    saveButton.setText("Batalkan Sewa"); // Change button text to "Cancel Rental"
-                    saveButton.setDisable(false); // Enable the button for cancellation
+                    saveButton.setText("Batalkan Sewa");
+                    saveButton.setDisable(false);
                 }
-
-                // Show current customer info if available
                 if (table.getRent() != null && table.getRent().getCustomer() != null) {
                     if (customerNameField != null) {
                         customerNameField.setText(table.getRent().getCustomer().getCustomerName());
@@ -102,8 +91,6 @@ public class TableRentalController {
                         customerPhoneNumberField.setText(table.getRent().getCustomer().getPhoneNumber());
                     }
                 }
-
-                // Show remaining time info
                 if (table.getRent() != null) {
                     Duration remainingTime = table.getRent().getRemainingTime();
                     long minutes = remainingTime.toMinutes();
@@ -112,7 +99,6 @@ public class TableRentalController {
                     }
                 }
             } else {
-                // Table is available, enable rental
                 setControlsForAvailableTable();
 
                 if (saveButton != null) {
@@ -129,14 +115,11 @@ public class TableRentalController {
     }
 
     private void setControlsForOccupiedTable() {
-        // For occupied tables, disable input controls but show information
         if (customerNameField != null) customerNameField.setDisable(true);
         if (customerPhoneNumberField != null) customerPhoneNumberField.setDisable(true);
         if (durationSpinner != null) durationSpinner.setDisable(true);
         if (minuteSpinner != null) minuteSpinner.setDisable(true);
         if (paymentMethodCombo != null) paymentMethodCombo.setDisable(true);
-
-        // Keep the save button enabled for cancellation
         if (saveButton != null) saveButton.setDisable(false);
     }
 
@@ -150,7 +133,6 @@ public class TableRentalController {
     }
 
     private void setControlsForAvailableTable() {
-        // For available tables, enable all controls
         if (customerNameField != null) customerNameField.setDisable(false);
         if (customerPhoneNumberField != null) customerPhoneNumberField.setDisable(false);
         if (durationSpinner != null) durationSpinner.setDisable(false);
@@ -165,8 +147,6 @@ public class TableRentalController {
         if (table == null || durationSpinner == null || minuteSpinner == null || priceLabel == null) {
             return;
         }
-
-        // Don't update price if table is occupied (showing remaining time instead)
         if (!table.isAvailable()) {
             return;
         }
@@ -175,9 +155,7 @@ public class TableRentalController {
             int hours = durationSpinner.getValue() != null ? durationSpinner.getValue() : 0;
             int minutes = minuteSpinner.getValue() != null ? minuteSpinner.getValue() : 0;
             int totalMinutes = hours * 60 + minutes;
-
-            // Calculate price based on table type and duration
-            double hourlyRate = table instanceof VipTable ? 25000 : 15000; // VIP: 25k, Non-VIP: 15k
+            double hourlyRate = table instanceof VipTable ? 25000 : 15000;
             double totalPrice = (totalMinutes / 60.0) * hourlyRate;
 
             priceLabel.setText(String.format("Rp. %.0f", totalPrice));
@@ -198,16 +176,13 @@ public class TableRentalController {
 
     @FXML
     private void handleSaveButton() {
-        // Prevent multiple clicks while processing
         if (isProcessing) {
             return;
         }
 
         try {
-            isProcessing = true; // Set flag to prevent double processing
-            saveButton.setDisable(true); // Disable button during processing
-
-            // Check if this is a cancellation (table is occupied) or a new rental
+            isProcessing = true;
+            saveButton.setDisable(true);
             if (!table.isAvailable()) {
                 handleCancelRental();
             } else {
@@ -218,14 +193,13 @@ public class TableRentalController {
             e.printStackTrace();
             showAlert("Error", "An error occurred while processing: " + e.getMessage());
         } finally {
-            isProcessing = false; // Reset flag
-            saveButton.setDisable(false); // Re-enable button
+            isProcessing = false;
+            saveButton.setDisable(false);
         }
     }
 
     private void handleCancelRental() {
         try {
-            // Show confirmation dialog
             Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmAlert.setTitle("Konfirmasi Pembatalan");
             confirmAlert.setHeaderText("Batalkan Penyewaan Meja?");
@@ -244,7 +218,6 @@ public class TableRentalController {
 
             Optional<ButtonType> result = confirmAlert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                // User confirmed cancellation
                 boolean success = tableService.releaseTable(table.getTableNumber());
 
                 if (success) {
@@ -279,8 +252,6 @@ public class TableRentalController {
                 showAlert("Error", "Please select a valid duration.");
                 return;
             }
-
-            // Use table service to rent the table with phone number
             boolean success = tableService.rentTable(table.getTableNumber(), customerName, phoneNumber, totalMinutes, paymentMethod);
 
             if (success) {
@@ -313,8 +284,6 @@ public class TableRentalController {
             customerPhoneNumberField.requestFocus();
             return false;
         }
-
-        // Basic phone number validation
         String phoneNumber = customerPhoneNumberField.getText().trim();
         if (!isValidPhoneNumber(phoneNumber)) {
             showAlert("Validation Error", "Please enter a valid phone number.");
@@ -344,16 +313,11 @@ public class TableRentalController {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        // Basic validation for Indonesian phone numbers
-        // Allow numbers starting with 08, +62, or 62
-        // Remove all non-digit characters for validation
         String cleanNumber = phoneNumber.replaceAll("[^0-9+]", "");
 
         if (cleanNumber.isEmpty()) {
             return false;
         }
-
-        // Check for valid Indonesian phone number patterns
         return cleanNumber.matches("^(\\+62|62|0)8[0-9]{8,11}$") ||
                 cleanNumber.matches("^[0-9]{10,13}$");
     }
@@ -364,8 +328,6 @@ public class TableRentalController {
             alert.setTitle(title);
             alert.setHeaderText(null);
             alert.setContentText(message);
-
-            // Set the alert to be always on top
             if (alert.getDialogPane().getScene().getWindow() instanceof Stage) {
                 Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
                 alertStage.setAlwaysOnTop(true);

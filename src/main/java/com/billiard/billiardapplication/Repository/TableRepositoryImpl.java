@@ -95,19 +95,15 @@ public class TableRepositoryImpl implements TableRepository {
             statement.setBoolean(1, table.isAvailable());
 
             if (table.isAvailable() || table.getRent() == null) {
-                // Table is available, clear rental data
                 statement.setNull(2, Types.VARCHAR);
                 statement.setNull(3, Types.VARCHAR);
                 statement.setNull(4, Types.TIMESTAMP);
                 statement.setNull(5, Types.BIGINT);
             } else {
-                // Table is rented, save rental data
                 Renting rent = table.getRent();
                 statement.setString(2, rent.getCustomer().getCustomerName());
                 statement.setString(3, rent.getCustomer().getPhoneNumber());
                 statement.setTimestamp(4, Timestamp.valueOf(rent.getStartTime()));
-
-                // Calculate total duration in minutes
                 Duration totalDuration = Duration.between(rent.getStartTime(), rent.getEndTime());
                 statement.setLong(5, totalDuration.toMinutes());
             }
@@ -169,7 +165,6 @@ public class TableRepositoryImpl implements TableRepository {
         return tables;
     }
 
-    // Helper method to map ResultSet to Table object
     private Table mapResultSetToTable(ResultSet rs) throws SQLException {
         int tableNumber = rs.getInt("table_number");
         String tableType = rs.getString("table_type");
@@ -182,14 +177,10 @@ public class TableRepositoryImpl implements TableRepository {
         } else {
             table = new NonVipTable(tableNumber, pricePerHour);
         }
-
-        // If table is marked as available in database, no need to check rental info
         if (isAvailable) {
             table.setAvailable(true);
             return table;
         }
-
-        // If table is not available, check rental information
         String customerName = rs.getString("customer_name");
         String phoneNumber = rs.getString("phone_number");
         Timestamp startTime = rs.getTimestamp("rental_start_time");
@@ -199,30 +190,20 @@ public class TableRepositoryImpl implements TableRepository {
             LocalDateTime rentalStartTime = startTime.toLocalDateTime();
             LocalDateTime currentTime = LocalDateTime.now();
             LocalDateTime originalEndTime = rentalStartTime.plusMinutes(durationMinutes);
-
-            // Check if rental has expired
             if (currentTime.isAfter(originalEndTime) || currentTime.equals(originalEndTime)) {
-                // Rental has expired, mark table as available and update database
                 System.out.println("Table " + tableNumber + " rental has expired, cleaning up...");
                 table.setAvailable(true);
-
-                // Clean up the expired rental in database immediately
                 cleanupExpiredTable(tableNumber);
 
                 return table;
             } else {
-                // Calculate remaining time
                 long remainingSeconds = Duration.between(currentTime, originalEndTime).getSeconds();
-
-                // If less than 1 second remaining, consider it expired
                 if (remainingSeconds <= 0) {
                     System.out.println("Table " + tableNumber + " has no time remaining, cleaning up...");
                     table.setAvailable(true);
                     cleanupExpiredTable(tableNumber);
                     return table;
                 }
-
-                // Only create rental if there's meaningful time remaining (more than 0 seconds)
                 try {
                     table.rentTable(customerName, phoneNumber, remainingSeconds);
                     System.out.println("Restored rental for table " + tableNumber +
@@ -234,7 +215,6 @@ public class TableRepositoryImpl implements TableRepository {
                 }
             }
         } else {
-            // No rental information but marked as unavailable - this is inconsistent
             System.out.println("Table " + tableNumber + " marked unavailable but no rental info, marking as available");
             table.setAvailable(true);
             cleanupExpiredTable(tableNumber);
@@ -243,18 +223,13 @@ public class TableRepositoryImpl implements TableRepository {
         return table;
     }
 
-    // Helper method to initialize tables if needed
     public void initializeTables(List<Table> initialTables) {
         this.tables = new ArrayList<>(initialTables);
     }
 
-    // Method to initialize tables in database (run once)
     public void initializeTablesInDatabase() {
         try (Connection conn = dataSource.getConnection()) {
-            // First, create the table if it doesn't exist
             createTableIfNotExists(conn);
-
-            // Then check if we need to insert initial data
             String checkSql = "SELECT COUNT(*) FROM tables";
             try (PreparedStatement stmt = conn.prepareStatement(checkSql);
                  ResultSet rs = stmt.executeQuery()) {
@@ -263,7 +238,6 @@ public class TableRepositoryImpl implements TableRepository {
                 int count = rs.getInt(1);
 
                 if (count == 0) {
-                    // Initialize with your table setup
                     insertInitialTables(conn);
                 }
             }
@@ -272,7 +246,6 @@ public class TableRepositoryImpl implements TableRepository {
         }
     }
 
-    // Create the tables table if it doesn't exist
     private void createTableIfNotExists(Connection conn) throws SQLException {
         String createTableSql = """
                     CREATE TABLE IF NOT EXISTS tables (
@@ -296,7 +269,6 @@ public class TableRepositoryImpl implements TableRepository {
         String sql = "INSERT INTO tables (table_number, table_type, is_available, price_per_hour) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            // Non-VIP tables 1-6 (assuming price 15000 per hour)
             for (int i = 1; i <= 6; i++) {
                 stmt.setInt(1, i);
                 stmt.setString(2, "NON_VIP");
@@ -304,8 +276,6 @@ public class TableRepositoryImpl implements TableRepository {
                 stmt.setFloat(4, 15000f);
                 stmt.addBatch();
             }
-
-            // VIP tables 7-12 (assuming price 25000 per hour)
             for (int i = 7; i <= 12; i++) {
                 stmt.setInt(1, i);
                 stmt.setString(2, "VIP");
@@ -407,8 +377,6 @@ public class TableRepositoryImpl implements TableRepository {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            // Calculate new start time so that the end time reflects the remaining time
             LocalDateTime newStartTime = currentTime;
             statement.setTimestamp(1, Timestamp.valueOf(newStartTime));
             statement.setLong(2, remainingMinutes);

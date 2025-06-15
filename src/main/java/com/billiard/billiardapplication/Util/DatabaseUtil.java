@@ -14,8 +14,6 @@ public class DatabaseUtil {
         config.setJdbcUrl("jdbc:mysql://localhost:3306/billiard_test");
         config.setUsername("root");
         config.setPassword("plm987!");
-
-        // pool
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(5);
         config.setConnectionTimeout(60_000);
@@ -37,8 +35,6 @@ public class DatabaseUtil {
                 System.out.println("Active connections: " + hikariDataSource.getHikariPoolMXBean().getActiveConnections());
                 System.out.println("Idle connections: " + hikariDataSource.getHikariPoolMXBean().getIdleConnections());
                 System.out.println("Total connections: " + hikariDataSource.getHikariPoolMXBean().getTotalConnections());
-
-                // Close the HikariCP pool
                 hikariDataSource.close();
                 System.out.println("HikariCP connection pool closed successfully");
             } else {

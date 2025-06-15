@@ -4,6 +4,8 @@ import com.billiard.billiardapplication.App;
 import com.billiard.billiardapplication.Entity.Renting.Invoice;
 import com.billiard.billiardapplication.Repository.InvoiceRepositoryImpl;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,38 +72,27 @@ public class InvoiceController {
     @FXML
     public void initialize() {
         System.out.println("InvoiceController initialize() called");
-
-        // Set up table columns
         setupTableColumns();
-
-        // Get invoice repository from App
         invoiceRepository = App.getInvoiceRepository();
-
-        // Load data after UI is initialized
         Platform.runLater(this::loadInvoiceData);
     }
 
     private void setupTableColumns() {
-        // Set up the table columns with proper property bindings
         noColumn.setCellValueFactory(cellData -> {
             int index = invoiceTable.getItems().indexOf(cellData.getValue()) + 1;
-            return new javafx.beans.property.SimpleIntegerProperty(index).asObject();
+            return new SimpleIntegerProperty(index).asObject();
         });
 
         invoiceIdColumn.setCellValueFactory(new PropertyValueFactory<>("invoiceId"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-
-        // Format date column
         dateColumn.setCellValueFactory(cellData -> {
             String formattedDate = cellData.getValue().getRentalDate()
                     .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-            return new javafx.beans.property.SimpleStringProperty(formattedDate);
+            return new SimpleStringProperty(formattedDate);
         });
 
         tableTypeColumn.setCellValueFactory(new PropertyValueFactory<>("tableType"));
-
-        // Format amount column
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountColumn.setCellFactory(col -> new TableCell<Invoice, Double>() {
             @Override
@@ -116,8 +107,6 @@ public class InvoiceController {
         });
 
         paymentMethodColumn.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
-
-        // Set the data to the table
         invoiceTable.setItems(invoiceList);
     }
 
@@ -126,16 +115,12 @@ public class InvoiceController {
             if (invoiceRepository != null) {
                 System.out.println("Loading invoice data...");
                 List<Invoice> invoices = invoiceRepository.findAll();
-
-                // Debug: Print all loaded invoices
                 System.out.println("Raw invoices from database:");
                 for (Invoice invoice : invoices) {
                     System.out.println("ID: " + invoice.getInvoiceId() +
                             ", Customer: " + invoice.getCustomerName() +
                             ", Date: " + invoice.getRentalDate());
                 }
-
-                // Check for duplicates before adding to list
                 Set<String> seenIds = new HashSet<>();
                 List<Invoice> uniqueInvoices = new ArrayList<>();
 
@@ -152,8 +137,6 @@ public class InvoiceController {
                 invoiceList.addAll(uniqueInvoices);
 
                 System.out.println("Loaded " + uniqueInvoices.size() + " unique invoices (filtered from " + invoices.size() + " total)");
-
-                // Force table refresh
                 Platform.runLater(() -> {
                     invoiceTable.refresh();
                 });
@@ -171,17 +154,12 @@ public class InvoiceController {
     @FXML
     void handleBackAction(ActionEvent event) {
         try {
-            // Navigate back to Dashboard
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/billiard/billiardapplication/Dashboard.fxml"));
             Parent root = loader.load();
-
-            // Get the dashboard controller and set the table service
             DashboardController dashboardController = loader.getController();
             if (dashboardController != null) {
                 dashboardController.setTableService(App.getTableService());
             }
-
-            // Get current stage and set new scene
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -222,10 +200,7 @@ public class InvoiceController {
 
     private void exportToCSV(File file) throws IOException {
         try (FileWriter writer = new FileWriter(file)) {
-            // Write CSV header
             writer.append("No,Invoice ID,Customer Name,Phone Number,Date,Table Type,Amount,Payment Method\n");
-
-            // Write data rows
             for (int i = 0; i < invoiceList.size(); i++) {
                 Invoice invoice = invoiceList.get(i);
                 writer.append(String.valueOf(i + 1)).append(",");
@@ -244,7 +219,6 @@ public class InvoiceController {
         if (value == null) {
             return "";
         }
-        // Escape quotes and wrap in quotes if contains comma or quote
         if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
             return "\"" + value.replace("\"", "\"\"") + "\"";
         }
@@ -257,8 +231,6 @@ public class InvoiceController {
             alert.setTitle(title);
             alert.setHeaderText(null);
             alert.setContentText(message);
-
-            // Set the alert to be always on top
             if (alert.getDialogPane().getScene().getWindow() instanceof Stage) {
                 Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
                 alertStage.setAlwaysOnTop(true);
@@ -271,7 +243,6 @@ public class InvoiceController {
         }
     }
 
-    // Method to refresh invoice data (can be called from other controllers)
     public void refreshData() {
         loadInvoiceData();
     }
@@ -280,7 +251,7 @@ public class InvoiceController {
         try {
             if (invoiceRepository != null) {
                 invoiceRepository.removeDuplicateInvoices();
-                loadInvoiceData(); // Reload after cleanup
+                loadInvoiceData();
                 showAlert("Success", "Duplicate invoices removed successfully.");
             }
         } catch (Exception e) {
@@ -293,18 +264,11 @@ public class InvoiceController {
     private void handleUserButtonAction(ActionEvent event) {
         try {
             System.out.println("User button clicked from Invoice screen - attempting to close application");
-
-            // Get current window
             Window window = userButton.getScene().getWindow();
-
-            // Show confirmation dialog
             boolean shouldExit = App.showExitConfirmation(window);
 
             if (shouldExit) {
-                // Clean up current controller resources first
                 cleanup();
-
-                // Perform application shutdown
                 App.shutdown();
             } else {
                 System.out.println("Exit cancelled by user");
@@ -313,8 +277,6 @@ public class InvoiceController {
         } catch (Exception e) {
             System.err.println("Error in handleUserButtonAction: " + e.getMessage());
             e.printStackTrace();
-
-            // Fallback - force close if there's an error
             try {
                 cleanup();
                 App.shutdown();
@@ -330,7 +292,6 @@ public class InvoiceController {
         System.out.println("Cleaning up InvoiceController resources...");
 
         try {
-            // Clear observable list
             if (invoiceList != null) {
                 invoiceList.clear();
             }
@@ -340,7 +301,6 @@ public class InvoiceController {
         }
 
         try {
-            // Clear table selection
             if (invoiceTable != null) {
                 invoiceTable.getSelectionModel().clearSelection();
             }

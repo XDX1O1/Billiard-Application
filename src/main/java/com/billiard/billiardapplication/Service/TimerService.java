@@ -13,7 +13,6 @@ public class TimerService {
     private TableRepositoryImpl tableRepository;
 
     private TimerService() {
-        // Start the timer update thread
         scheduler.scheduleAtFixedRate(this::updateAllTimers, 1, 1, TimeUnit.SECONDS);
     }
 
@@ -56,12 +55,9 @@ public class TimerService {
             TableTimer timer = entry.getValue();
 
             if (timer.getRemainingSeconds() <= 0) {
-                // Timer expired
                 expiredTables.add(tableNumber);
             }
         }
-
-        // Handle expired timers
         for (int tableNumber : expiredTables) {
             activeTimers.remove(tableNumber);
             handleTimerExpired(tableNumber);
@@ -72,7 +68,6 @@ public class TimerService {
         System.out.println("Timer expired for table " + tableNumber);
         if (tableRepository != null) {
             try {
-                // Mark table as available in database
                 tableRepository.cleanupExpiredTable(tableNumber);
             } catch (Exception e) {
                 System.err.println("Error cleaning up expired table " + tableNumber + ": " + e.getMessage());
@@ -84,7 +79,6 @@ public class TimerService {
         System.out.println("Shutting down TimerService...");
 
         try {
-            // Stop all active timers by clearing the map
             if (activeTimers != null) {
                 System.out.println("Stopping " + activeTimers.size() + " active timers...");
                 for (Map.Entry<Integer, TableTimer> entry : activeTimers.entrySet()) {
@@ -93,15 +87,11 @@ public class TimerService {
                 activeTimers.clear();
                 System.out.println("All timers stopped and cleared");
             }
-
-            // Shutdown the scheduler
             if (scheduler != null && !scheduler.isShutdown()) {
                 scheduler.shutdown();
                 try {
-                    // Wait for existing tasks to complete
                     if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
                         scheduler.shutdownNow();
-                        // Wait a while for tasks to respond to being cancelled
                         if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
                             System.err.println("Scheduler did not terminate gracefully");
                         }
@@ -122,7 +112,6 @@ public class TimerService {
         }
     }
 
-    // Inner class to represent a table timer
     private static class TableTimer {
         private final int tableNumber;
         private final LocalDateTime startTime;

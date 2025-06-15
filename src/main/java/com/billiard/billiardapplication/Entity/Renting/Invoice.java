@@ -13,7 +13,6 @@ public class Invoice {
     private double amount;
     private String paymentMethod;
 
-    // Constructor
     public Invoice(String invoiceId, int tableNumber, String customerName, String phoneNumber,
                    LocalDateTime rentalDate, String tableType, double amount, String paymentMethod) {
         this.invoiceId = invoiceId;
@@ -26,10 +25,9 @@ public class Invoice {
         this.paymentMethod = paymentMethod;
     }
 
-    // Default constructor
-    public Invoice() {}
+    public Invoice() {
+    }
 
-    // Getters and Setters
     public String getInvoiceId() {
         return invoiceId;
     }

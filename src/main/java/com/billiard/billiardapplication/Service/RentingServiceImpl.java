@@ -28,12 +28,8 @@ public class RentingServiceImpl implements RentingService {
         if (!table.isAvailable()) {
             throw new RuntimeException("Table is already occupied: " + tableNumber);
         }
-
-        // Convert minutes to seconds for rentTable method
         long durationSeconds = durationMinutes * 60;
         table.rentTable(customerName, phoneNumber, durationSeconds);
-
-        // Update in database
         tableRepository.update(table);
 
         return table.getRent();
@@ -54,14 +50,9 @@ public class RentingServiceImpl implements RentingService {
         }
 
         try {
-            // Stop the rental session
             table.getRent().stopSession();
-
-            // Release the table
             table.removeRent();
             table.setAvailable(true);
-
-            // Update in database
             tableRepository.update(table);
 
         } catch (InterruptedException e) {
@@ -82,16 +73,12 @@ public class RentingServiceImpl implements RentingService {
         if (table.isAvailable() || table.getRent() == null) {
             throw new RuntimeException("Table is not currently rented: " + tableNumber);
         }
-
-        // Convert minutes to hours for extend method
         long additionalHours = additionalMinutes / 60;
         if (additionalMinutes % 60 > 0) {
-            additionalHours++; // Round up to next hour
+            additionalHours++;
         }
 
         table.getRent().extendSession(additionalHours);
-
-        // Update in database
         tableRepository.update(table);
     }
 
@@ -138,7 +125,7 @@ public class RentingServiceImpl implements RentingService {
         }
 
         Table table = tableOpt.get();
-        return table.getRent(); // Can be null if not rented
+        return table.getRent();
     }
 
     @Override

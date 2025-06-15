@@ -52,7 +52,6 @@ public class DashboardController {
     @FXML
     private GridPane tableGrid;
 
-    // Timer and name labels
     @FXML
     private Label timeLabel1, timeLabel2, timeLabel3, timeLabel4, timeLabel5, timeLabel6,
             timeLabel7, timeLabel8, timeLabel9, timeLabel10, timeLabel11, timeLabel12;
@@ -71,23 +70,16 @@ public class DashboardController {
     public void setTableService(TableService tableService) {
         this.tableService = tableService;
         this.timerService = TimerService.getInstance();
-
-        // Set the repository for the timer service
         if (tableService instanceof TableServiceImpl) {
             TableServiceImpl serviceImpl = (TableServiceImpl) tableService;
-            // You'll need to add a getter for the repository in TableServiceImpl
             timerService.setTableRepository(serviceImpl.getTableRepository());
         }
-
-        // Initialize data after service is set
         Platform.runLater(this::initializeData);
     }
 
     @FXML
     public void initialize() {
         System.out.println("DashboardController initialize() called");
-
-        // Initialize combo boxes
         if (filterTypeCombo != null) {
             filterTypeCombo.getItems().addAll("None", "VIP", "NON_VIP");
             filterTypeCombo.setValue("None");
@@ -99,8 +91,6 @@ public class DashboardController {
         }
 
         setupTimerLoop();
-
-        // Setup click handlers after UI is fully loaded
         Platform.runLater(this::setupTableClickHandlers);
     }
 
@@ -138,16 +128,12 @@ public class DashboardController {
         for (Node node : tableGrid.getChildren()) {
             if (node instanceof VBox) {
                 VBox vbox = (VBox) node;
-
-                // Add click handler
                 vbox.setOnMouseClicked(event -> {
                     Table table = vboxTableMap.get(vbox);
                     if (table != null) {
                         showTableRentalDialog(table);
                     }
                 });
-
-                // Add hover effects that respect the current table state
                 vbox.setOnMouseEntered(event -> {
                     Table table = vboxTableMap.get(vbox);
                     if (table != null) {
@@ -158,7 +144,6 @@ public class DashboardController {
                 vbox.setOnMouseExited(event -> {
                     Table table = vboxTableMap.get(vbox);
                     if (table != null) {
-                        // Restore original appearance
                         updateTableAppearanceWithCSS(vbox, table);
                         vbox.setStyle(vbox.getStyle().replace(" -fx-opacity: 0.8; -fx-cursor: hand;", ""));
                     }
@@ -171,8 +156,6 @@ public class DashboardController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/billiard/billiardapplication/TableRentalDialog.fxml"));
             Parent root = loader.load();
-
-            // Get the modal controller and pass table info
             TableRentalController controller = loader.getController();
             if (controller != null && tableService != null) {
                 controller.setTableInfo(table, tableService);
@@ -180,29 +163,19 @@ public class DashboardController {
                 System.err.println("Controller or TableService is null");
                 return;
             }
-
-            // Create modal stage
             Stage modalStage = new Stage();
             modalStage.initModality(Modality.APPLICATION_MODAL);
-
-            // Get current window safely
             if (tableGrid != null && tableGrid.getScene() != null && tableGrid.getScene().getWindow() != null) {
                 modalStage.initOwner(tableGrid.getScene().getWindow());
             }
 
             modalStage.setTitle("Table Rental - " + getTableDisplayName(table));
             modalStage.setResizable(false);
-
-            // Set scene
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
             modalStage.initStyle(StageStyle.TRANSPARENT);
             modalStage.setScene(scene);
-
-            // Show modal and refresh grid after it closes
             modalStage.showAndWait();
-
-            // Refresh the grid after modal closes
             refreshTableGrid();
 
         } catch (IOException e) {
@@ -218,8 +191,6 @@ public class DashboardController {
         if (timeline != null) {
             timeline.stop();
         }
-
-        // Update UI every second based on TimerService
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             updateTimerDisplays();
         }));
@@ -241,8 +212,6 @@ public class DashboardController {
 
                 if (timerService.hasActiveTimer(tableNumber)) {
                     int remainingSeconds = timerService.getRemainingSeconds(tableNumber);
-
-                    // Find the corresponding time label
                     Label timeLabel = findTimeLabelForTable(tableNumber);
                     if (timeLabel != null) {
                         Platform.runLater(() -> {
@@ -266,7 +235,6 @@ public class DashboardController {
     }
 
     private Label findTimeLabelForTable(int tableNumber) {
-        // Find which position this table is displayed at
         for (int i = 1; i <= 12; i++) {
             VBox vbox = getVBoxAtPosition(i);
             if (vbox != null && vboxTableMap.containsKey(vbox)) {
@@ -295,11 +263,7 @@ public class DashboardController {
 
             List<Table> filtered = tableService.getFilteredTables(availabilityFilter, typeFilter);
             System.out.println("Filtered tables count: " + filtered.size());
-
-            // Clear mappings
             vboxTableMap.clear();
-
-            // Clear ALL labels first and hide VBoxes that won't be used
             for (int i = 1; i <= 12; i++) {
                 Label timeLabel = getTimeLabel(i);
                 Label nameLabel = getNameLabel(i);
@@ -308,8 +272,6 @@ public class DashboardController {
                 if (timeLabel != null && nameLabel != null && vbox != null) {
                     timeLabel.setText("");
                     nameLabel.setText("");
-
-                    // Hide VBox if no table will be displayed here
                     if (i > filtered.size()) {
                         vbox.setVisible(false);
                     } else {
@@ -317,8 +279,6 @@ public class DashboardController {
                     }
                 }
             }
-
-            // Update display for each filtered table
             for (int i = 0; i < Math.min(filtered.size(), 12); i++) {
                 Table table = filtered.get(i);
                 Label timeLabel = getTimeLabel(i + 1);
@@ -329,26 +289,18 @@ public class DashboardController {
                     String displayName = getTableDisplayName(table);
                     nameLabel.setText(displayName);
                     vbox.setVisible(true);
-
-                    // Map this VBox to its table
                     vboxTableMap.put(vbox, table);
-
-                    // UPDATE TABLE APPEARANCE BASED ON AVAILABILITY
                     updateTableAppearanceWithCSS(vbox, table);
 
                     if (table.isAvailable()) {
                         timeLabel.setText("00:00");
-                        // Stop any existing timer for this table
                         timerService.stopTimer(table.getTableNumber());
                     } else {
                         try {
                             int remainingSeconds;
-
-                            // Check if TimerService already has this timer
                             if (timerService.hasActiveTimer(table.getTableNumber())) {
                                 remainingSeconds = timerService.getRemainingSeconds(table.getTableNumber());
                             } else {
-                                // Start new timer from database data
                                 remainingSeconds = (int) table.getRent().getRemainingTime().getSeconds();
                                 timerService.startTimer(table.getTableNumber(), remainingSeconds);
                             }
@@ -364,8 +316,6 @@ public class DashboardController {
                     }
                 }
             }
-
-            // Reapply click handlers after refresh
             Platform.runLater(this::setupTableClickHandlers);
 
         } catch (Exception e) {
@@ -431,12 +381,8 @@ public class DashboardController {
                 if (node instanceof VBox) {
                     Integer rowIndex = GridPane.getRowIndex(node);
                     Integer colIndex = GridPane.getColumnIndex(node);
-
-                    // Handle null values (which default to 0)
                     int row = (rowIndex != null) ? rowIndex : 0;
                     int col = (colIndex != null) ? colIndex : 0;
-
-                    // Calculate position: row * 3 + col + 1
                     int position = row * 3 + col + 1;
 
                     if (position == index) {
@@ -454,18 +400,11 @@ public class DashboardController {
     private void handleUserButtonAction(ActionEvent event) {
         try {
             System.out.println("User button clicked - attempting to close application");
-
-            // Get current window
             Window window = userButton.getScene().getWindow();
-
-            // Show confirmation dialog
             boolean shouldExit = App.showExitConfirmation(window);
 
             if (shouldExit) {
-                // Clean up current controller resources first
                 cleanup();
-
-                // Perform application shutdown
                 App.shutdown();
             } else {
                 System.out.println("Exit cancelled by user");
@@ -474,8 +413,6 @@ public class DashboardController {
         } catch (Exception e) {
             System.err.println("Error in handleUserButtonAction: " + e.getMessage());
             e.printStackTrace();
-
-            // Fallback - force close if there's an error
             try {
                 cleanup();
                 App.shutdown();
@@ -487,12 +424,10 @@ public class DashboardController {
         }
     }
 
-    // Cleanup method to stop timeline when controller is destroyed
     public void cleanup() {
         System.out.println("Cleaning up DashboardController resources...");
 
         try {
-            // Stop timeline
             if (timeline != null) {
                 timeline.stop();
                 timeline = null;
@@ -503,7 +438,6 @@ public class DashboardController {
         }
 
         try {
-            // Clear mappings
             if (vboxTableMap != null) {
                 vboxTableMap.clear();
             }
@@ -521,13 +455,8 @@ public class DashboardController {
     @FXML
     private void handleDocButtonAction(ActionEvent event) {
         try {
-            // Clean up current controller resources
             cleanup();
-
-            // Get current stage
             Stage stage = (Stage) docButton.getScene().getWindow();
-
-            // Switch to Invoice scene using SceneManager
             SceneManager.switchScene(stage, "/com/billiard/billiardapplication/Invoice.fxml");
 
         } catch (Exception e) {
@@ -540,17 +469,12 @@ public class DashboardController {
         if (vbox == null || table == null) return;
 
         try {
-            // Remove existing style classes
             vbox.getStyleClass().removeAll("table-available", "table-occupied");
-
-            // Add appropriate style class
             if (table.isAvailable()) {
                 vbox.getStyleClass().add("table-available");
             } else {
                 vbox.getStyleClass().add("table-occupied");
             }
-
-            // Update label styles
             for (Node child : vbox.getChildren()) {
                 if (child instanceof Label) {
                     Label label = (Label) child;

@@ -47,8 +47,6 @@ abstract public class Table {
 
     public void rentTable(String customerName, String phoneNumber, long durationSeconds) {
         Customer customer = new Customer(customerName, phoneNumber);
-
-        // Convert seconds to duration
         Duration rentDuration = Duration.ofSeconds(durationSeconds);
 
         LocalDateTime startTime = LocalDateTime.now();
@@ -57,14 +55,14 @@ abstract public class Table {
         Renting r = new Renting(this, customer, startTime, endTime);
         this.isAvailable = false;
         this.rentDetail = r;
-        occupiedTable++; // Increment the counter
+        occupiedTable++;
     }
 
     public void setAvailable(boolean available) {
         if (this.isAvailable && !available) {
-            occupiedTable++; // Table becoming occupied
+            occupiedTable++;
         } else if (!this.isAvailable && available) {
-            occupiedTable--; // Table becoming available
+            occupiedTable--;
         }
         this.isAvailable = available;
     }

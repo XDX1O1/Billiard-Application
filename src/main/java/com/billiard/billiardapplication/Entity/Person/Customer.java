@@ -4,12 +4,10 @@ public class Customer {
     private Integer customerId;
     private String customerName;
     private String phoneNumber;
-    private static Integer customerCount = 0; // Initialize to 0 instead of null
+    private static Integer customerCount = 0;
 
     public Customer(String customerName, String phoneNumber) {
-        // Increment the static counter first
         customerCount++;
-        // Then assign the incremented value to this customer's ID
         this.customerId = customerCount;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;

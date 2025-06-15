@@ -17,7 +17,7 @@ public class Renting {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration duration;
-    protected volatile Duration remainingTime; // Made volatile for thread safety
+    protected volatile Duration remainingTime;
     private float totalCost;
     private Dictionary<String, Object> details;
     private RentingBackgroundProg runningTime;
@@ -32,8 +32,6 @@ public class Renting {
         this.remainingTime = duration;
         this.totalCost = 0;
         this.isActive = true;
-
-        // Start background timer
         runningTime = new RentingBackgroundProg(this);
         runningTime.start();
     }
@@ -66,7 +64,6 @@ public class Renting {
         return remainingTime;
     }
 
-    // Method to update remaining time (called by background thread)
     public synchronized void updateRemainingTime(Duration newRemainingTime) {
         this.remainingTime = newRemainingTime;
     }
@@ -84,7 +81,6 @@ public class Renting {
     }
 
     public float calculateCost() {
-        // Calculate cost based on actual time used (original duration - remaining time)
         Duration usedTime = duration.minus(remainingTime);
         double hoursUsed = usedTime.toMinutes() / 60.0;
 
@@ -108,8 +104,6 @@ public class Renting {
 
     public void stopSession() throws InterruptedException {
         this.isActive = false;
-
-        // Calculate final duration based on actual usage
         LocalDateTime actualEndTime = LocalDateTime.now();
         this.duration = Duration.between(startTime, actualEndTime);
         this.endTime = actualEndTime;
@@ -117,14 +111,10 @@ public class Renting {
         synchronized (this) {
             this.remainingTime = Duration.ZERO;
         }
-
-        // Stop the background thread
         if (runningTime != null && runningTime.isAlive()) {
             runningTime.interrupt();
             runningTime.join();
         }
-
-        // Calculate final cost
         totalCost = calculateCost();
     }
 

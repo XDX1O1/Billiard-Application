@@ -17,8 +17,6 @@ public class SceneManager {
     public static void switchScene(Stage stage, String fxmlPath) {
         try {
             System.out.println("Attempting to load FXML: " + fxmlPath);
-
-            // Check if resource exists
             URL fxmlUrl = SceneManager.class.getResource(fxmlPath);
             if (fxmlUrl == null) {
                 System.err.println("FXML file not found: " + fxmlPath);
@@ -30,8 +28,6 @@ public class SceneManager {
 
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
-
-            // Handle specific controller initialization
             if (fxmlPath.contains("Dashboard")) {
                 DashboardController dashboardController = loader.getController();
                 TableServiceImpl tableService = App.getTableService();

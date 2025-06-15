@@ -31,21 +31,17 @@ public class App extends Application {
     private static HikariDataSource hikariDataSource;
     private static AdminServiceImpl adminService;
     private static TableServiceImpl tableService;
-    private static InvoiceRepositoryImpl invoiceRepository; // Add invoice repository
+    private static InvoiceRepositoryImpl invoiceRepository;
 
     @Override
     public void start(Stage stage) throws IOException {
 
         hikariDataSource = DatabaseUtil.getHikariDataSource();
-
-        // Initialize repositories
         AdminRepositoryImpl adminRepository = new AdminRepositoryImpl(hikariDataSource);
         TableRepositoryImpl tableRepository = new TableRepositoryImpl(hikariDataSource);
-        invoiceRepository = new InvoiceRepositoryImpl(hikariDataSource); // Initialize invoice repository
-
-        // Initialize services with proper dependencies
+        invoiceRepository = new InvoiceRepositoryImpl(hikariDataSource);
         adminService = new AdminServiceImpl(adminRepository);
-        tableService = new TableServiceImpl(tableRepository, invoiceRepository); // Pass both repositories
+        tableService = new TableServiceImpl(tableRepository, invoiceRepository);
 
         tableRepository.initializeTablesInDatabase();
 
@@ -83,7 +79,6 @@ public class App extends Application {
         System.out.println("Initiating application shutdown...");
 
         try {
-            // Stop TimerService if it exists
             TimerService timerService = TimerService.getInstance();
             if (timerService != null) {
                 timerService.shutdown();
@@ -94,10 +89,7 @@ public class App extends Application {
         }
 
         try {
-            // Print current pool status before closing
             DatabaseUtil.printPoolStatus();
-
-            // Close database connections using DatabaseUtil
             DatabaseUtil.closeAllConnections();
 
         } catch (Exception e) {
@@ -105,8 +97,6 @@ public class App extends Application {
         }
 
         System.out.println("Application shutdown completed");
-
-        // Exit the application
         Platform.exit();
         System.exit(0);
     }
@@ -117,8 +107,6 @@ public class App extends Application {
             alert.setTitle("Exit Application");
             alert.setHeaderText("Are you sure you want to exit?");
             alert.setContentText("All active timers will be stopped and the application will close.");
-
-            // Set the alert to be always on top and modal
             if (owner != null) {
                 alert.initOwner(owner);
                 alert.initModality(Modality.APPLICATION_MODAL);
@@ -133,11 +121,10 @@ public class App extends Application {
 
         } catch (Exception e) {
             System.err.println("Error showing exit confirmation: " + e.getMessage());
-            return true; // Default to allowing exit if dialog fails
+            return true;
         }
     }
 
-    // Override the stop method to handle application closing
     @Override
     public void stop() throws Exception {
         System.out.println("JavaFX Application stop() method called");

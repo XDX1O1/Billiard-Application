@@ -64,7 +64,6 @@ public class LoginController {
 
     @FXML
     private void handleMousePressed(MouseEvent event) {
-        // Record the current mouse position relative to the window
         Stage stage = (Stage) rootPane.getScene().getWindow();
         xOffset = event.getSceneX();
         yOffset = event.getSceneY();
@@ -72,7 +71,6 @@ public class LoginController {
 
     @FXML
     private void handleMouseDragged(MouseEvent event) {
-        // Move the window based on mouse drag
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.setX(event.getScreenX() - xOffset);
         stage.setY(event.getScreenY() - yOffset);

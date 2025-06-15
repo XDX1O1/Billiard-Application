@@ -18,14 +18,14 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
 
     @Override
     public void save(Invoice invoice) {
-        // First check if invoice already exists
         if (findById(invoice.getInvoiceId()).isPresent()) {
             System.out.println("Invoice already exists, skipping save: " + invoice.getInvoiceId());
             return;
         }
 
         String sql = """
-            INSERT INTO invoices (invoice_id, table_number, customer_name, phone_number, 
+            
+                INSERT INTO invoices (invoice_id, table_number, customer_name, phone_number, 
                                 rental_date, table_type, amount, payment_method) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
@@ -51,7 +51,6 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 1062 || e.getMessage().contains("Duplicate entry")) {
-                // MySQL duplicate key error
                 System.out.println("Duplicate invoice detected, skipping: " + invoice.getInvoiceId());
                 return;
             }
@@ -63,9 +62,9 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
     @Override
     public List<Invoice> findAll() {
         List<Invoice> invoices = new ArrayList<>();
-        // Use DISTINCT to prevent duplicates and add better ordering
         String sql = """
-            SELECT DISTINCT invoice_id, table_number, customer_name, phone_number, 
+            
+                SELECT DISTINCT invoice_id, table_number, customer_name, phone_number, 
                    rental_date, table_type, amount, payment_method 
             FROM invoices 
             ORDER BY rental_date DESC, invoice_id DESC
