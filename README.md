@@ -36,7 +36,7 @@ bash:
 git clone https://github.com/XDX1O1/Billiard-Application
 or
 git clone git@github.com:XDX1O1/Billiard-Application.git
-cd cd Billiard-Application
+cd Billiard-Application
 ```
 
 ### 2. Backend Setup
