@@ -66,7 +66,7 @@ Url : https://gluonhq.com/products/scene-builder/
 ### 4. Additional Setup
 
 ```IDE
-Im using IntellijIDEA, its the same thing if you're using netbeans or eclipse
+Im using IntellijIDEA, it probably the same thing if you're using netbeans or eclipse
 ```
 
 ```XML
@@ -75,8 +75,8 @@ through the pom.xml(in my case i can just click reload maven projects)
 ```
 
 ```Databases
-You might wanted to edit few thing if you using different databases name you can customize it on
-DatabaseUtil class
+You might wanted to edit few thing if you using different databases name
+you can customize it on DatabaseUtil class
 ```
 
 
@@ -86,20 +86,20 @@ CREATE TABLE admin (
   id int NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
   password varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
+  PRIMARY KEY (id),
+  UNIQUE KEY username (username)
 );
 
 CREATE TABLE tables (
   table_number int NOT NULL,
   table_type varchar(10) NOT NULL,
-  is_available tinyint(1) NOT NULL DEFAULT '1',
+  is_available tinyint(1) NOT NULL DEFAULT 1,
   price_per_hour float NOT NULL,
   customer_name varchar(100) DEFAULT NULL,
   phone_number varchar(20) DEFAULT NULL,
   rental_start_time timestamp NULL DEFAULT NULL,
   rental_duration_minutes bigint DEFAULT NULL,
-  PRIMARY KEY (`table_number`)
+  PRIMARY KEY (table_number)
 )
 
 CREATE TABLE invoices (
