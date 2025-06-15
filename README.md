@@ -155,7 +155,8 @@ CREATE TABLE invoices (
 ## Running Project:
 ```
 For running the project is straight forward just run the main class.
-
+```
+```
 But there is some cases where the class wont get recognized as class instead just plain java
 for my case since im using IntellijIDEA i could just right-click on pom.xml and on the bottom 
 there is options for maven, and then choose sync projects.
