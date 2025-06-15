@@ -93,8 +93,10 @@ you can customize it on DatabaseUtil class
 ```SQL
 SQL:
 
+# Create Database :
 CREATE DATABASE billiard_test;
 
+# Create Table & Query :
 CREATE TABLE admin (
   id int NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
@@ -103,7 +105,7 @@ CREATE TABLE admin (
   UNIQUE KEY username (username)
 );
 
-#Dummy Data for login
+-> Dummy Data for login
 INSERT INTO admin(ID, USERNAME, PASSWORD)
 VALUES (1, 'admin', 'admin');
 
@@ -119,6 +121,23 @@ CREATE TABLE tables (
   PRIMARY KEY (table_number)
 )
 
+-> Data Pre-Defined For tables
+INSERT INTO tables(table_number, table_type, is_available, price_per_hour)
+VALUES (1, 'NON_VIP', 1, 15000),
+       (2, 'NON_VIP', 1, 15000),
+       (3, 'NON_VIP', 1, 15000),
+       (4, 'NON_VIP', 1, 15000),
+       (5, 'NON_VIP', 1, 15000),
+       (6, 'NON_VIP', 1, 15000);
+
+INSERT INTO tables(table_number, table_type, is_available, price_per_hour)
+VALUES (7, 'VIP', 1, 25000),
+       (8, 'VIP', 1, 25000),
+       (9, 'VIP', 1, 25000),
+       (10, 'VIP', 1, 25000),
+       (11, 'VIP', 1, 25000),
+       (12, 'VIP', 1, 25000);
+
 CREATE TABLE invoices (
     invoice_id VARCHAR(50) PRIMARY KEY,
     table_number INT NOT NULL,
@@ -131,11 +150,9 @@ CREATE TABLE invoices (
 
     FOREIGN KEY (table_number) REFERENCES tables(table_number)
 );
-
 ```
 
 ## Running Project:
-
 ```
 For running the project is straight forward just run the main class.
 
@@ -150,7 +167,6 @@ sorry idk about other IDE :D
 ## Project-Structure:
 ![Screenshot](docs/003-projectStructure.png)
 
-
 ## Preview:
 ### Login
 ![Screenshot](docs/001-loginPage.png)
@@ -163,3 +179,6 @@ sorry idk about other IDE :D
 
 ### Renting
 ![Screenshot](docs/005-rentTable.png)
+
+
+# From Me made from my slow ass brain
