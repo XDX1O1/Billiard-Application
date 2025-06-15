@@ -1,18 +1,13 @@
 package com.billiard.billiardapplication.Controller;
 
-import com.billiard.billiardapplication.App;
-import com.billiard.billiardapplication.Entity.Renting.Invoice;
 import com.billiard.billiardapplication.Entity.Table.Table;
 import com.billiard.billiardapplication.Entity.Table.VipTable;
-import com.billiard.billiardapplication.Repository.InvoiceRepositoryImpl;
 import com.billiard.billiardapplication.Service.TableService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class TableRentalController {
@@ -140,7 +135,6 @@ public class TableRentalController {
         if (paymentMethodCombo != null) paymentMethodCombo.setDisable(false);
         if (saveButton != null) saveButton.setDisable(false);
     }
-
 
 
     private void updatePrice() {
@@ -328,8 +322,7 @@ public class TableRentalController {
             alert.setTitle(title);
             alert.setHeaderText(null);
             alert.setContentText(message);
-            if (alert.getDialogPane().getScene().getWindow() instanceof Stage) {
-                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            if (alert.getDialogPane().getScene().getWindow() instanceof Stage alertStage) {
                 alertStage.setAlwaysOnTop(true);
             }
 

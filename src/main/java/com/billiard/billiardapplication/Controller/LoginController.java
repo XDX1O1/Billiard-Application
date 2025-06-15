@@ -1,18 +1,17 @@
 package com.billiard.billiardapplication.Controller;
 
 import com.billiard.billiardapplication.Service.AdminService;
+import com.billiard.billiardapplication.Service.AdminServiceImpl;
 import com.billiard.billiardapplication.Util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-
-import com.billiard.billiardapplication.Service.AdminServiceImpl;
-import javafx.scene.input.MouseEvent;
 
 public class LoginController {
 
@@ -20,28 +19,22 @@ public class LoginController {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private PasswordField inputPasswordField;
+    @FXML
+    private TextField inputUsernameField;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Label popupLoginText;
+    @FXML
+    private AnchorPane rootPane;
 
     public LoginController(AdminServiceImpl adminService) {
         this.adminService = adminService;
     }
-
-    @FXML
-    private Button closeButton;
-
-    @FXML
-    private PasswordField inputPasswordField;
-
-    @FXML
-    private TextField inputUsernameField;
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private Label popupLoginText;
-
-    @FXML
-    private AnchorPane rootPane;
 
     @FXML
     public void initialize() {

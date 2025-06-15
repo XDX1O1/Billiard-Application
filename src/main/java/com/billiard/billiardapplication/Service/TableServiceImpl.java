@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class TableServiceImpl implements TableService {
 
-    private TableRepositoryImpl tableRepository;
-    private InvoiceRepositoryImpl invoiceRepository;
+    private final TableRepositoryImpl tableRepository;
+    private final InvoiceRepositoryImpl invoiceRepository;
     private String currFilterByAvailability = "None";
     private String currFilterByType = "None";
 

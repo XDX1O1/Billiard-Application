@@ -1,51 +1,86 @@
+/* Base styles - Your existing styles with responsive enhancements */
 .anchor-pane {
     -fx-background-image: url("../assets/bgImage.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .vbox-backgroundAvailable {
     -fx-background-image: url("../assets/tableAvailable.png");
     -fx-background-size: cover;
     -fx-background-position: center;
-    -fx-background-size: 550 250;
     -fx-background-repeat: no-repeat;
 }
 
 .vbox-style {
     -fx-border-color: gray;
-    -fx-padding: 10;
+    -fx-padding: 1em;
     -fx-border-radius: 10;
 }
 
+/* Responsive Table Styles */
 .table-available {
     -fx-background-color: linear-gradient(to bottom, #4CAF50, #45a049);
     -fx-border-color: #388E3C;
-    -fx-border-width: 2;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+    -fx-border-width: 0.15em;
+    -fx-border-radius: 1em;
+    -fx-background-radius: 1em;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 0.4em, 0, 0, 0.15em);
+    -fx-min-height: 8em;
+    -fx-pref-height: 12em;
 }
 
 .table-occupied {
     -fx-background-color: linear-gradient(to bottom, #f44336, #d32f2f);
     -fx-border-color: #c62828;
-    -fx-border-width: 2;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+    -fx-border-width: 0.15em;
+    -fx-border-radius: 1em;
+    -fx-background-radius: 1em;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 0.4em, 0, 0, 0.15em);
+    -fx-min-height: 8em;
+    -fx-pref-height: 12em;
 }
 
+/* Responsive Text Labels */
 .table-label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(one-pass-box, black, 2, 0, 1, 1);
+    -fx-effect: dropshadow(one-pass-box, black, 0.15em, 0, 0.08em, 0.08em);
+    -fx-font-size: 1.2em;
+    -fx-min-font-size: 14px;
+    -fx-max-font-size: 24px;
 }
 
+/* Time labels - larger and more prominent */
+.table-label.time-label {
+    -fx-font-size: 2.5em;
+    -fx-min-font-size: 28px;
+    -fx-max-font-size: 48px;
+}
+
+/* Name labels */
+.table-label.name-label {
+    -fx-font-size: 1.3em;
+    -fx-min-font-size: 16px;
+    -fx-max-font-size: 22px;
+}
+
+/* Top Navigation Responsive Styles */
 .topNavButton {
-    -fx-border-radius: 5;
+    -fx-border-radius: 0.4em;
     -fx-border-color: #240115;
-    -fx-background-radius: 5;
+    -fx-background-radius: 0.4em;
     -fx-background-color: transparent;
-    -fx-border-width: 2;
+    -fx-border-width: 0.15em;
+    -fx-min-width: 8em;
+    -fx-pref-width: 12em;
+    -fx-min-height: 2.5em;
+    -fx-font-size: 1em;
+}
+
+.topNavButton:hover {
+    -fx-background-color: rgba(240, 248, 255, 0.3);
 }
 
 .topNavButtonDoc {
@@ -57,17 +92,118 @@
 }
 
 .topNavButtonRightIcon {
-    -fx-background-size: cover;
+    -fx-background-size: contain;
     -fx-background-position: center;
-    -fx-background-size: 50 50;
     -fx-background-repeat: no-repeat;
     -fx-background-color: transparent;
+    -fx-min-width: 3em;
+    -fx-min-height: 3em;
+    -fx-pref-width: 4em;
+    -fx-pref-height: 4em;
 }
 
 .topNavButtonRightIcon:hover {
-    -fx-background-color: #f0f8ff;
+    -fx-background-color: rgba(240, 248, 255, 0.5);
+    -fx-border-radius: 0.4em;
 }
 
 .topNavAppIcon {
     -fx-background-image: url("../assets/appIcon.png");
+    -fx-fit-width: auto;
+    -fx-fit-height: auto;
+    -fx-preserve-ratio: true;
+}
+
+/* Grid and Layout Responsive Adjustments */
+.table-grid {
+    -fx-hgap: 2%;
+    -fx-vgap: 1.5%;
+    -fx-padding: 1.5%;
+}
+
+/* Container spacing adjustments */
+.nav-container {
+    -fx-spacing: 1%;
+    -fx-padding: 1.5% 2%;
+}
+
+/* Responsive breakpoints simulation through scaling */
+.small-screen .table-label {
+    -fx-font-size: 1em;
+}
+
+.small-screen .table-label.time-label {
+    -fx-font-size: 2em;
+}
+
+.small-screen .table-label.name-label {
+    -fx-font-size: 1.1em;
+}
+
+.small-screen .topNavButton {
+    -fx-min-width: 6em;
+    -fx-font-size: 0.9em;
+}
+
+.medium-screen .table-label {
+    -fx-font-size: 1.1em;
+}
+
+.medium-screen .table-label.time-label {
+    -fx-font-size: 2.2em;
+}
+
+.medium-screen .table-label.name-label {
+    -fx-font-size: 1.2em;
+}
+
+.large-screen .table-label {
+    -fx-font-size: 1.3em;
+}
+
+.large-screen .table-label.time-label {
+    -fx-font-size: 2.8em;
+}
+
+.large-screen .table-label.name-label {
+    -fx-font-size: 1.4em;
+}
+
+/* Minimum sizes to ensure readability */
+.table-available, .table-occupied {
+    -fx-min-width: 12em;
+    -fx-min-height: 8em;
+}
+
+/* VBox containers for tables */
+.table-container {
+    -fx-spacing: 0.8em;
+    -fx-padding: 1em;
+    -fx-alignment: center;
+}
+
+/* Enhanced hover effects */
+.table-available:hover {
+    -fx-background-color: linear-gradient(to bottom, #5CBF60, #4CAF50);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.table-occupied:hover {
+    -fx-background-color: linear-gradient(to bottom, #f66356, #f44336);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Smooth transitions */
+.table-available, .table-occupied, .topNavButtonRightIcon {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 0.4em, 0, 0, 0.15em);
+}
+
+/* Filter combo boxes responsive */
+.filter-combo {
+    -fx-min-width: 8em;
+    -fx-pref-width: 12em;
+    -fx-font-size: 1em;
+    -fx-min-font-size: 12px;
 }

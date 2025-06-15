@@ -6,7 +6,7 @@ import java.time.Duration;
 
 public class RentingBackgroundProg extends Thread {
 
-    private Renting rental;
+    private final Renting rental;
     private volatile boolean running = true;
 
     public RentingBackgroundProg(Renting rental) {

@@ -8,19 +8,18 @@ import com.billiard.billiardapplication.Util.RentingBackgroundProg;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Dictionary;
 
 public class Renting {
     protected Customer customer;
     protected Table table;
-    private LocalDateTime startTime;
+    protected volatile Duration remainingTime;
+    private final LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration duration;
-    protected volatile Duration remainingTime;
     private float totalCost;
     private Dictionary<String, Object> details;
-    private RentingBackgroundProg runningTime;
+    private final RentingBackgroundProg runningTime;
     private boolean isActive;
 
     public Renting(Table table, Customer customer, LocalDateTime startTime, LocalDateTime endTime) {
@@ -84,8 +83,7 @@ public class Renting {
         Duration usedTime = duration.minus(remainingTime);
         double hoursUsed = usedTime.toMinutes() / 60.0;
 
-        if (table instanceof VipTable) {
-            VipTable vipTable = (VipTable) table;
+        if (table instanceof VipTable vipTable) {
             return (float) (vipTable.getAdditionalCost() + (table.getPricePerHour() * hoursUsed));
         } else if (table instanceof NonVipTable) {
             return (float) (table.getPricePerHour() * hoursUsed);

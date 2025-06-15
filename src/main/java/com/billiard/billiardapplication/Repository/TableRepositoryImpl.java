@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TableRepositoryImpl implements TableRepository {
-    private HikariDataSource dataSource;
+    private final HikariDataSource dataSource;
     private List<Table> tables;
 
     public TableRepositoryImpl(HikariDataSource dataSource) {

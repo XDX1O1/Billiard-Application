@@ -2,13 +2,12 @@ package com.billiard.billiardapplication.Service;
 
 import com.billiard.billiardapplication.Entity.Person.Admin;
 import com.billiard.billiardapplication.Repository.AdminRepositoryImpl;
-import java.time.LocalDateTime;
 
-import com.billiard.billiardapplication.Controller.LoginController;
+import java.time.LocalDateTime;
 
 public class AdminServiceImpl implements AdminService {
 
-    private AdminRepositoryImpl adminRepository;
+    private final AdminRepositoryImpl adminRepository;
     private LocalDateTime loginTime;
 
     public AdminServiceImpl(AdminRepositoryImpl adminRepository) {

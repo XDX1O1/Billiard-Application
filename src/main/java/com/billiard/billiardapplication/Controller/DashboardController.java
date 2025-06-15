@@ -1,7 +1,6 @@
 package com.billiard.billiardapplication.Controller;
 
 import com.billiard.billiardapplication.App;
-import com.billiard.billiardapplication.Entity.Table.NonVipTable;
 import com.billiard.billiardapplication.Entity.Table.Table;
 import com.billiard.billiardapplication.Entity.Table.VipTable;
 import com.billiard.billiardapplication.Service.TableService;
@@ -34,7 +33,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class DashboardController {
 
@@ -60,8 +58,8 @@ public class DashboardController {
     private Label nameLabel1, nameLabel2, nameLabel3, nameLabel4, nameLabel5, nameLabel6,
             nameLabel7, nameLabel8, nameLabel9, nameLabel10, nameLabel11, nameLabel12;
 
-    private Map<Label, Integer> timerMap = new HashMap<>();
-    private Map<VBox, Table> vboxTableMap = new HashMap<>();
+    private final Map<Label, Integer> timerMap = new HashMap<>();
+    private final Map<VBox, Table> vboxTableMap = new HashMap<>();
     private Timeline timeline;
     private TableService tableService;
     private TimerService timerService;
@@ -70,8 +68,7 @@ public class DashboardController {
     public void setTableService(TableService tableService) {
         this.tableService = tableService;
         this.timerService = TimerService.getInstance();
-        if (tableService instanceof TableServiceImpl) {
-            TableServiceImpl serviceImpl = (TableServiceImpl) tableService;
+        if (tableService instanceof TableServiceImpl serviceImpl) {
             timerService.setTableRepository(serviceImpl.getTableRepository());
         }
         Platform.runLater(this::initializeData);
@@ -126,8 +123,7 @@ public class DashboardController {
         }
 
         for (Node node : tableGrid.getChildren()) {
-            if (node instanceof VBox) {
-                VBox vbox = (VBox) node;
+            if (node instanceof VBox vbox) {
                 vbox.setOnMouseClicked(event -> {
                     Table table = vboxTableMap.get(vbox);
                     if (table != null) {
@@ -272,11 +268,7 @@ public class DashboardController {
                 if (timeLabel != null && nameLabel != null && vbox != null) {
                     timeLabel.setText("");
                     nameLabel.setText("");
-                    if (i > filtered.size()) {
-                        vbox.setVisible(false);
-                    } else {
-                        vbox.setVisible(true);
-                    }
+                    vbox.setVisible(i <= filtered.size());
                 }
             }
             for (int i = 0; i < Math.min(filtered.size(), 12); i++) {
@@ -476,8 +468,7 @@ public class DashboardController {
                 vbox.getStyleClass().add("table-occupied");
             }
             for (Node child : vbox.getChildren()) {
-                if (child instanceof Label) {
-                    Label label = (Label) child;
+                if (child instanceof Label label) {
                     label.getStyleClass().removeAll("table-label");
                     label.getStyleClass().add("table-label");
                 }

@@ -1,8 +1,8 @@
 package com.billiard.billiardapplication.Entity.Table;
 
 public class VipTable extends Table {
-    private float additionalCost;
-    private String[] additionalBenefit = {"Ruangan tanpa rokok",
+    private final float additionalCost;
+    private final String[] additionalBenefit = {"Ruangan tanpa rokok",
             "Meja lebih presisi dengan lighting khusus",
             "Menyediakan minuman gratis selama durasi sewa",
             "Ruangan lebih privat"};

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class AdminRepositoryImpl implements AdminRepository {
 
-    private HikariDataSource dataSource;
+    private final HikariDataSource dataSource;
     private Admin currentLoggedInAdmin;
 
     public AdminRepositoryImpl(HikariDataSource dataSource) {

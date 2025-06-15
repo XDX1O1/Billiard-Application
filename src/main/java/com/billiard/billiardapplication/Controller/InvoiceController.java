@@ -67,7 +67,7 @@ public class InvoiceController {
     private TableColumn<Invoice, String> paymentMethodColumn;
 
     private InvoiceRepositoryImpl invoiceRepository;
-    private ObservableList<Invoice> invoiceList = FXCollections.observableArrayList();
+    private final ObservableList<Invoice> invoiceList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -231,8 +231,7 @@ public class InvoiceController {
             alert.setTitle(title);
             alert.setHeaderText(null);
             alert.setContentText(message);
-            if (alert.getDialogPane().getScene().getWindow() instanceof Stage) {
-                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            if (alert.getDialogPane().getScene().getWindow() instanceof Stage alertStage) {
                 alertStage.setAlwaysOnTop(true);
             }
 

@@ -1,16 +1,24 @@
 package com.billiard.billiardapplication.Entity.Person;
 
 public class Customer {
+    private static Integer customerCount = 0;
     private Integer customerId;
     private String customerName;
     private String phoneNumber;
-    private static Integer customerCount = 0;
 
     public Customer(String customerName, String phoneNumber) {
         customerCount++;
         this.customerId = customerCount;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public static Integer getCustomerCount() {
+        return customerCount;
+    }
+
+    public static void setCustomerCount(Integer customerCount) {
+        Customer.customerCount = customerCount;
     }
 
     public Integer getCustomerId() {
@@ -35,13 +43,5 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public static Integer getCustomerCount() {
-        return customerCount;
-    }
-
-    public static void setCustomerCount(Integer customerCount) {
-        Customer.customerCount = customerCount;
     }
 }

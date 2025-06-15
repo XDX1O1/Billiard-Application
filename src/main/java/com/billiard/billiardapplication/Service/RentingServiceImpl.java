@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class RentingServiceImpl implements RentingService {
 
-    private TableRepositoryImpl tableRepository;
+    private final TableRepositoryImpl tableRepository;
 
     public RentingServiceImpl(TableRepositoryImpl tableRepository) {
         this.tableRepository = tableRepository;

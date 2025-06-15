@@ -4,13 +4,12 @@ import com.billiard.billiardapplication.Entity.Renting.Invoice;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InvoiceRepositoryImpl implements InvoiceRepository {
-    private HikariDataSource dataSource;
+    private final HikariDataSource dataSource;
 
     public InvoiceRepositoryImpl(HikariDataSource dataSource) {
         this.dataSource = dataSource;
@@ -24,11 +23,11 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
         }
 
         String sql = """
-            
-                INSERT INTO invoices (invoice_id, table_number, customer_name, phone_number, 
-                                rental_date, table_type, amount, payment_method) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """;
+                
+                    INSERT INTO invoices (invoice_id, table_number, customer_name, phone_number, 
+                                    rental_date, table_type, amount, payment_method) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -63,12 +62,12 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
     public List<Invoice> findAll() {
         List<Invoice> invoices = new ArrayList<>();
         String sql = """
-            
-                SELECT DISTINCT invoice_id, table_number, customer_name, phone_number, 
-                   rental_date, table_type, amount, payment_method 
-            FROM invoices 
-            ORDER BY rental_date DESC, invoice_id DESC
-            """;
+                
+                    SELECT DISTINCT invoice_id, table_number, customer_name, phone_number, 
+                       rental_date, table_type, amount, payment_method 
+                FROM invoices 
+                ORDER BY rental_date DESC, invoice_id DESC
+                """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -114,12 +113,12 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
     public List<Invoice> findByTableNumber(int tableNumber) {
         List<Invoice> invoices = new ArrayList<>();
         String sql = """
-            SELECT DISTINCT invoice_id, table_number, customer_name, phone_number, 
-                   rental_date, table_type, amount, payment_method 
-            FROM invoices 
-            WHERE table_number = ? 
-            ORDER BY rental_date DESC
-            """;
+                SELECT DISTINCT invoice_id, table_number, customer_name, phone_number, 
+                       rental_date, table_type, amount, payment_method 
+                FROM invoices 
+                WHERE table_number = ? 
+                ORDER BY rental_date DESC
+                """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -161,21 +160,21 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
 
     public void initializeInvoicesTable() {
         String createTableSql = """
-        CREATE TABLE IF NOT EXISTS invoices (
-            invoice_id VARCHAR(50) PRIMARY KEY,
-            table_number INT NOT NULL,
-            customer_name VARCHAR(100) NOT NULL,
-            phone_number VARCHAR(20) NOT NULL,
-            rental_date TIMESTAMP NOT NULL,
-            table_type VARCHAR(20) NOT NULL,
-            amount DECIMAL(10,2) NOT NULL,
-            payment_method VARCHAR(50) NOT NULL,
-            FOREIGN KEY (table_number) REFERENCES tables(table_number),
-            UNIQUE KEY unique_invoice (invoice_id),
-            INDEX idx_rental_date (rental_date),
-            INDEX idx_table_number (table_number)
-        )
-        """;
+                CREATE TABLE IF NOT EXISTS invoices (
+                    invoice_id VARCHAR(50) PRIMARY KEY,
+                    table_number INT NOT NULL,
+                    customer_name VARCHAR(100) NOT NULL,
+                    phone_number VARCHAR(20) NOT NULL,
+                    rental_date TIMESTAMP NOT NULL,
+                    table_type VARCHAR(20) NOT NULL,
+                    amount DECIMAL(10,2) NOT NULL,
+                    payment_method VARCHAR(50) NOT NULL,
+                    FOREIGN KEY (table_number) REFERENCES tables(table_number),
+                    UNIQUE KEY unique_invoice (invoice_id),
+                    INDEX idx_rental_date (rental_date),
+                    INDEX idx_table_number (table_number)
+                )
+                """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(createTableSql)) {
@@ -191,11 +190,11 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
 
     public void removeDuplicateInvoices() {
         String sql = """
-            DELETE i1 FROM invoices i1
-            INNER JOIN invoices i2 
-            WHERE i1.invoice_id = i2.invoice_id 
-            AND i1.rental_date < i2.rental_date
-            """;
+                DELETE i1 FROM invoices i1
+                INNER JOIN invoices i2 
+                WHERE i1.invoice_id = i2.invoice_id 
+                AND i1.rental_date < i2.rental_date
+                """;
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

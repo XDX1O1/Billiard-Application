@@ -5,20 +5,23 @@ import com.billiard.billiardapplication.Entity.Renting.Renting;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 abstract public class Table {
-    private int tableNumber;
+    private static int occupiedTable;
+    private final int tableNumber;
     private boolean isAvailable;
     private Renting rentDetail;
-    private static int occupiedTable;
-    private float pricePerHour;
+    private final float pricePerHour;
 
     public Table(int tableNumber, float pricePerHour) {
         this.tableNumber = tableNumber;
         this.pricePerHour = pricePerHour;
         this.isAvailable = true;
         this.rentDetail = null;
+    }
+
+    public static int getOccupiedTable() {
+        return occupiedTable;
     }
 
     public float getPricePerHour() {
@@ -33,12 +36,17 @@ abstract public class Table {
         return this.isAvailable;
     }
 
-    public Renting getRent() {
-        return this.rentDetail;
+    public void setAvailable(boolean available) {
+        if (this.isAvailable && !available) {
+            occupiedTable++;
+        } else if (!this.isAvailable && available) {
+            occupiedTable--;
+        }
+        this.isAvailable = available;
     }
 
-    public static int getOccupiedTable() {
-        return occupiedTable;
+    public Renting getRent() {
+        return this.rentDetail;
     }
 
     public void removeRent() {
@@ -56,14 +64,5 @@ abstract public class Table {
         this.isAvailable = false;
         this.rentDetail = r;
         occupiedTable++;
-    }
-
-    public void setAvailable(boolean available) {
-        if (this.isAvailable && !available) {
-            occupiedTable++;
-        } else if (!this.isAvailable && available) {
-            occupiedTable--;
-        }
-        this.isAvailable = available;
     }
 }

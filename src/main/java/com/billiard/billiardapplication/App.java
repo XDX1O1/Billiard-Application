@@ -23,7 +23,6 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.Optional;
 
 public class App extends Application {
@@ -32,28 +31,6 @@ public class App extends Application {
     private static AdminServiceImpl adminService;
     private static TableServiceImpl tableService;
     private static InvoiceRepositoryImpl invoiceRepository;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-
-        hikariDataSource = DatabaseUtil.getHikariDataSource();
-        AdminRepositoryImpl adminRepository = new AdminRepositoryImpl(hikariDataSource);
-        TableRepositoryImpl tableRepository = new TableRepositoryImpl(hikariDataSource);
-        invoiceRepository = new InvoiceRepositoryImpl(hikariDataSource);
-        adminService = new AdminServiceImpl(adminRepository);
-        tableService = new TableServiceImpl(tableRepository, invoiceRepository);
-
-        tableRepository.initializeTablesInDatabase();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-        LoginController controller = new LoginController(adminService);
-        loader.setController(controller);
-
-        Parent root = loader.load();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
 
     public static AdminServiceImpl getAdminService() {
         return adminService;
@@ -123,6 +100,28 @@ public class App extends Application {
             System.err.println("Error showing exit confirmation: " + e.getMessage());
             return true;
         }
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        hikariDataSource = DatabaseUtil.getHikariDataSource();
+        AdminRepositoryImpl adminRepository = new AdminRepositoryImpl(hikariDataSource);
+        TableRepositoryImpl tableRepository = new TableRepositoryImpl(hikariDataSource);
+        invoiceRepository = new InvoiceRepositoryImpl(hikariDataSource);
+        adminService = new AdminServiceImpl(adminRepository);
+        tableService = new TableServiceImpl(tableRepository, invoiceRepository);
+
+        tableRepository.initializeTablesInDatabase();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        LoginController controller = new LoginController(adminService);
+        loader.setController(controller);
+
+        Parent root = loader.load();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @Override
