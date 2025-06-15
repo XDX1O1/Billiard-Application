@@ -120,7 +120,7 @@ CREATE TABLE invoices (
 ## Running Project:
 
 ```
-For running the project is straight forward just run the main class make
+For running the project is straight forward just run the main class
 ```
 
 
