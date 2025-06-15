@@ -165,8 +165,8 @@ For running the project is straight forward just run the main class.
 ## Error :
 ```
 IntellijIDEA :
-There is some cases where the class wont get recognized as class instead just plain java
-for my case since im using IntellijIDEA i could just right-click on pom.xml and at the very bottom
+There is some cases where the class won't get recognized as class, instead just plain java
+if you encounter this on IntellijIDEA you could just right-click on pom.xml and at the very bottom
 there is options for maven, and then choose sync projects.
 
 Other IDE:
