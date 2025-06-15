@@ -43,17 +43,17 @@ cd Billiard-Application
 
 ```Java
 Java:
-im using jdk 21, so its recommended using the same version or higher
+JDK 21, Its recommended using the same version or higher
 ```
 
 ```Mysql
 Mysql:
-im using mysql ver 8 to be specific 8.0.42
+Mysql ver 8, to be specific 8.0.42
 ```
 
 ```Maven
 Maven:
-im using maven 3.9.9
+Maven 3.9.9
 ```
 
 ### 3. Frontend Setup
@@ -65,7 +65,8 @@ for styling the .fxml and integrated it on scenebuilder or straight through code
 
 ```JavaFX
 JavaFX:
-using javafx but to make life easier im using scenebuilder
+Using javafx but to make life easier im using scenebuilder
+
 Url : https://gluonhq.com/products/scene-builder/
 ```
 
@@ -73,7 +74,7 @@ Url : https://gluonhq.com/products/scene-builder/
 
 ```IDE
 IDE:
-Im using IntellijIDEA, it probably the same thing if you're using netbeans or eclipse
+Using IntellijIDEA, it probably the same thing if you're using netbeans or eclipse
 ```
 
 ```XML
@@ -96,7 +97,9 @@ SQL:
 # Create Database :
 CREATE DATABASE billiard_test;
 
-# Create Table & Query :
+# Create Table & Query #
+
+# ADMIN table :
 CREATE TABLE admin (
   id int NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
@@ -109,6 +112,7 @@ CREATE TABLE admin (
 INSERT INTO admin(ID, USERNAME, PASSWORD)
 VALUES (1, 'admin', 'admin');
 
+# Tables table :
 CREATE TABLE tables (
   table_number int NOT NULL,
   table_type varchar(10) NOT NULL,
@@ -138,6 +142,7 @@ VALUES (7, 'VIP', 1, 25000),
        (11, 'VIP', 1, 25000),
        (12, 'VIP', 1, 25000);
 
+# Invoices tabel :
 CREATE TABLE invoices (
     invoice_id VARCHAR(50) PRIMARY KEY,
     table_number INT NOT NULL,
