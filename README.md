@@ -65,7 +65,7 @@ for styling the .fxml and integrated it on scenebuilder or straight through code
 
 ```JavaFX
 JavaFX:
-Using javafx but to make life easier im using scenebuilder
+Using javafx but to make life easier im using scenebuilder for designing stage/scene of .fxml
 
 Url : https://gluonhq.com/products/scene-builder/
 ```
