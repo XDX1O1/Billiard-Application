@@ -31,11 +31,11 @@ Billiard Table Reservation Application is a system where you can rent billiard t
 
 ### 1. Clone the repository
 
-```
+```bash
 bash:
-git https://github.com/XDX1O1/Billiard-Application
+git clone https://github.com/XDX1O1/Billiard-Application
 or
-git git@github.com:XDX1O1/Billiard-Application.git
+git clone git@github.com:XDX1O1/Billiard-Application.git
 cd cd Billiard-Application
 ```
 
