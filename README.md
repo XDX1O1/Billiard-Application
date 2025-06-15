@@ -164,11 +164,13 @@ For running the project is straight forward just run the main class.
 
 ## Error :
 ```
+IntellijIDEA :
 There is some cases where the class wont get recognized as class instead just plain java
 for my case since im using IntellijIDEA i could just right-click on pom.xml and at the very bottom
 there is options for maven, and then choose sync projects.
 
-sorry idk about other IDE :D
+Other IDE:
+sorry idk about other IDE 😅
 ```
 
 
