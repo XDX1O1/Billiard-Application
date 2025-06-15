@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="anchor-pane" stylesheets="@css/dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.billiard.billiardapplication.Controller.DashboardController">
+    <VBox layoutY="-1.0" prefHeight="1086.0" prefWidth="1920.0" spacing="10" stylesheets="@css/dashboard.css" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+      <children>
+         <HBox prefHeight="84.0" prefWidth="1920.0" spacing="10.0" stylesheets="@css/dashboard.css">
+            <children>
+               <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" styleClass="topNavAppIcon">
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+                  <image>
+                     <Image url="@assets/appIcon.png" />
+                  </image></ImageView>
+                <ComboBox fx:id="filterTypeCombo" prefWidth="150.0" promptText="Type" styleClass="topNavButton" stylesheets="@css/dashboard.css" />
+                <ComboBox fx:id="filterTableCombo" prefWidth="200.0" promptText="Table" styleClass="topNavButton" stylesheets="@css/dashboard.css" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="docButton" onAction="#handleDocButtonAction" prefHeight="40.0" prefWidth="40.0" stylesheets="@css/dashboard.css">
+                  <styleClass>
+                     <String fx:value="topNavButtonRightIcon" />
+                     <String fx:value="topNavButtonDoc" />
+                  </styleClass></Button>
+               <Region prefWidth="15.0" />
+                <Button fx:id="userButton" onAction="#handleUserButtonAction" prefHeight="40.0" prefWidth="40.0" stylesheets="@css/dashboard.css" text="👤">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+                  <styleClass>
+                     <String fx:value="topNavButtonRightIcon" />
+                     <String fx:value="topNavButtonUser" />
+                  </styleClass></Button>
+            </children>
+            <padding>
+               <Insets left="170.0" right="170.0" top="15.0" />
+            </padding>
+         </HBox>
+         <GridPane fx:id="tableGrid" hgap="30.0" prefHeight="772.0" prefWidth="1520.0" stylesheets="@css/dashboard.css" vgap="10.0">
+           <columnConstraints>
+             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+           </columnConstraints>
+           <rowConstraints>
+             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+           </rowConstraints>
+            <children>
+                <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css">
+                    <Label fx:id="timeLabel1" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="50.0" />
+                     </font></Label>
+                    <Label fx:id="nameLabel1" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="Non-VIP 1" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Label>
+                </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="1">
+                  <children>
+                     <Label fx:id="timeLabel2" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel2" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="Non-VIP 2" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="2">
+                  <children>
+                     <Label fx:id="timeLabel3" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel3" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="Non-VIP 3" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.rowIndex="1">
+                  <children>
+                     <Label fx:id="timeLabel4" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel4" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="Non-VIP 4" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <children>
+                     <Label fx:id="timeLabel5" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel5" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="Non-VIP 5" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <children>
+                     <Label fx:id="timeLabel6" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel6" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="Non-VIP 6" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.rowIndex="2">
+                  <children>
+                     <Label fx:id="timeLabel7" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel7" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="VIP 7" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <children>
+                     <Label fx:id="timeLabel8" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel8" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="VIP 8" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <children>
+                     <Label fx:id="timeLabel9" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel9" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="VIP 9" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.rowIndex="3">
+                  <children>
+                     <Label fx:id="timeLabel10" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel10" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="VIP 10" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <children>
+                     <Label fx:id="timeLabel11" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel11" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="VIP 11" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+               <VBox alignment="CENTER" spacing="10" stylesheets="@css/dashboard.css" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <children>
+                     <Label fx:id="timeLabel12" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" text="00:00" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="50.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="nameLabel12" alignment="CENTER" prefHeight="35.0" prefWidth="158.0" style="-fx-font-weight: bold;" stylesheets="@css/dashboard.css" text="VIP 12" textFill="WHITE">
+                        <font>
+                           <Font size="24.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </VBox>
+            </children>
+            <VBox.margin>
+               <Insets left="200.0" right="200.0" />
+            </VBox.margin>
+         </GridPane>
+      </children></VBox>
+</AnchorPane>

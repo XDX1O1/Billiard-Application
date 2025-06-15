@@ -1,0 +1,26 @@
+.vboxStyle {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.closeButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #666666;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.nameTextField .paymentMethodMenu {
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.saveButton {
+    -fx-background-color: #8B4513;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+}
