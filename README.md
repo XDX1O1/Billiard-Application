@@ -105,7 +105,7 @@ CREATE TABLE admin (
   UNIQUE KEY username (username)
 );
 
--> Dummy Data for login
+# Dummy Data for login
 INSERT INTO admin(ID, USERNAME, PASSWORD)
 VALUES (1, 'admin', 'admin');
 
@@ -121,7 +121,7 @@ CREATE TABLE tables (
   PRIMARY KEY (table_number)
 )
 
--> Data Pre-Defined For tables
+# Data Pre-Defined For tables
 INSERT INTO tables(table_number, table_type, is_available, price_per_hour)
 VALUES (1, 'NON_VIP', 1, 15000),
        (2, 'NON_VIP', 1, 15000),
