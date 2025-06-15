@@ -31,7 +31,8 @@ Billiard Table Reservation Application is a system where you can rent billiard t
 
 ### 1. Clone the repository
 
-```bash
+```
+bash:
 git https://github.com/XDX1O1/Billiard-Application
 or
 git git@github.com:XDX1O1/Billiard-Application.git
@@ -40,48 +41,58 @@ cd cd Billiard-Application
 
 ### 2. Backend Setup
 
-```Java
+```
+Java:
 im using jdk 21, so its recommended using the same version or higher
 ```
 
-```Mysql
+```
+Mysql:
 im using mysql ver 8 to be specific 8.0.42
 ```
 
-```Maven
+```
+Maven:
 im using maven 3.9.9
 ```
 
 ### 3. Frontend Setup
 
-```CSS
+```
+CSS:
 for styling the .fxml and integrated it on scenebuilder or straight through code
 ```
 
-```JavaFX
+```
+JavaFX:
 using javafx but to make life easier im using scenebuilder
 Url : https://gluonhq.com/products/scene-builder/
 ```
 
 ### 4. Additional Setup
 
-```IDE
+```
+IDE:
 Im using IntellijIDEA, it probably the same thing if you're using netbeans or eclipse
 ```
 
-```XML
+```
+XML:
 Before you run the main class program please make sure you install the dependencies
 through the pom.xml(in my case i can just click reload maven projects)
 ```
 
-```Databases
+```
+Databases:
 You might wanted to edit few thing if you using different databases name
 you can customize it on DatabaseUtil class
 ```
 
 
 ## Databases SQL
-```SQL
+```
+SQL:
+
 CREATE TABLE admin (
   id int NOT NULL AUTO_INCREMENT,
   username varchar(50) NOT NULL,
