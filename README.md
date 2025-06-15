@@ -187,4 +187,4 @@ sorry idk about other IDE :D
 ![Screenshot](docs/005-rentTable.png)
 
 
-# From Me made from my slow ass brain
+# Made by me from my slow ass brain
